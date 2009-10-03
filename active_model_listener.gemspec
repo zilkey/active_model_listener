@@ -2,7 +2,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{active_model_listener}
-  s.version = "0.2.0"
+  s.version = "0.2.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Jeff Dean"]
@@ -11,6 +11,19 @@ Gem::Specification.new do |s|
   s.extra_rdoc_files = [
     "LICENSE",
      "README.md"
+  ]
+  s.files = [
+    ".document",
+     ".gitignore",
+     "LICENSE",
+     "README.md",
+     "Rakefile",
+     "VERSION",
+     "active_model_listener.gemspec",
+     "lib/active_model_listener.rb",
+     "lib/active_model_listener/active_model_listener.rb",
+     "spec/active_model_listener_spec.rb",
+     "spec/spec_helper.rb"
   ]
   s.homepage = %q{http://github.com/zilkey/active_model_listener}
   s.rdoc_options = ["--charset=UTF-8"]

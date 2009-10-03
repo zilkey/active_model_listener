@@ -1,6 +1,19 @@
+NOTE: I originally released this gem with the name Switchboard.  However, there was already a gem by that name, so I renamed it.  Sorry for the confusion.
+
 # ActiveModelListener
 
 Simple, global ActiveRecord event observers, using a middleware architecture, that can easily be turned on and off.  Designed for audit trails, activity feeds and other application-level event handlers.
+
+## Installation
+
+The gem is hosted at gemcutter.  You can either add gemcutter as a source, or you can make gemcutter your default source (recommended):
+
+    gem install gemcutter
+    gem tumble
+
+Then, install it like any other gem:
+
+    gem install active_model_listener
 
 ## Usage
 
