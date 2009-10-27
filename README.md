@@ -1,5 +1,3 @@
-NOTE: I originally released this gem with the name Switchboard.  However, there was already a gem by that name, so I renamed it.  Sorry for the confusion.
-
 # ActiveModelListener
 
 Simple, global ActiveRecord event observers, using a middleware architecture, that can easily be turned on and off.  Designed for audit trails, activity feeds and other application-level event handlers.
@@ -58,6 +56,8 @@ Then, create a listener class that defines methods for after_create, after_updat
         private :publish_activity_feed_items
       end
     end
+
+Inside the after_create, after_destroy and after_update methods all calls will be called _without_ listeners, to prevent recursion.  If you need listeners to be turned on during those blocks, you'll have to set them yourself within the blocks.
 
 ## Turning off listeners in specs
 

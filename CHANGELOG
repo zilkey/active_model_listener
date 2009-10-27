@@ -1,0 +1,3 @@
+2009-10-26
+  - you no longer have to define all 3 callback methods in callback classes
+  - callback methods are execute without listeners, to prevent recursion
