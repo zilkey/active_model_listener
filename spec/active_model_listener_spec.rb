@@ -2,11 +2,15 @@ require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 
 class GenericListener
   def self.after_create(object)
+    object.class.create
   end
   def self.after_update(object)
   end
   def self.after_destroy(object)
   end
+end
+
+class SimpleListener
 end
 
 class FooListener < GenericListener
@@ -61,6 +65,13 @@ describe ActiveModelListener do
     end
   end
 
+  describe "callback methods" do
+    it "should turn off other listeners" do
+      FooListener.should_receive(:after_create).once
+      Article.create! :title => "foo"
+    end
+  end
+
   describe "after create" do
     it "should fire off all wired up events" do
       FooListener.should_receive(:after_create)
@@ -84,6 +95,20 @@ describe ActiveModelListener do
       FooListener.should_receive(:after_destroy).with(article)
       BarListener.should_receive(:after_destroy).with(article)
       article.destroy
+    end
+  end
+
+  describe "a listener with missing methods" do
+    before do
+      ActiveModelListener.listeners.clear
+      ActiveModelListener.listeners << SimpleListener
+    end
+      
+    it "should not fire off the missing methods" do
+      article = Article.create
+      proc do
+        article.destroy
+      end.should_not raise_error
     end
   end
 

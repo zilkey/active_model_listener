@@ -10,8 +10,11 @@ class ActiveModelListener
     end
 
     def dispatch(object, action)
+      method_name = "after_#{action}"
       self.listeners.each do |listener|
-        listener.send "after_#{action}", object
+        without_listeners do
+          listener.send method_name, object if listener.respond_to?(method_name)
+        end
       end
     end
 
