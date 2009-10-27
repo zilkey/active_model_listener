@@ -28,6 +28,9 @@ describe ActiveModelListener do
       string :title
     end
 
+    build_model :editorials, :superclass => Article do
+    end
+
     ActiveModelListener.listeners.clear
     ActiveModelListener.listeners << FooListener
     ActiveModelListener.listeners << BarListener
@@ -69,6 +72,11 @@ describe ActiveModelListener do
     it "should turn off other listeners" do
       FooListener.should_receive(:after_create).once
       Article.create! :title => "foo"
+    end
+
+    it "should not be run twice for inherited models" do
+      FooListener.should_receive(:after_create).once
+      Editorial.create! :title => "foo"
     end
   end
 
