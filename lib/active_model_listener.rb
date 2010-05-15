@@ -1,4 +1,4 @@
-require 'activerecord'
+require 'active_record'
 require 'active_model_listener/active_model_listener'
 
 module WireUpModels

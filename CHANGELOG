@@ -1,3 +1,6 @@
+2010-05-14
+  - fixed annoying 'activerecord' deprecation warning (thanks to Todd Persen)
+
 2009-10-26
   - you no longer have to define all 3 callback methods in callback classes
   - callback methods are execute without listeners, to prevent recursion

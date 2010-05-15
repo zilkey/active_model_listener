@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{active_model_listener}
-  s.version = "0.2.3"
+  s.version = "0.2.4"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Jeff Dean"]
-  s.date = %q{2009-10-26}
+  s.date = %q{2010-05-14}
   s.email = %q{jeff@zilkey.com}
   s.extra_rdoc_files = [
     "LICENSE",
@@ -32,7 +32,7 @@ Gem::Specification.new do |s|
   s.homepage = %q{http://github.com/zilkey/active_model_listener}
   s.rdoc_options = ["--charset=UTF-8"]
   s.require_paths = ["lib"]
-  s.rubygems_version = %q{1.3.3}
+  s.rubygems_version = %q{1.3.6}
   s.summary = %q{Simple, global ActiveRecord event observers, using a middleware architecture, that can easily be turned on and off.  Designed for audit trails, activity feeds and other app-level event handlers}
   s.test_files = [
     "spec/active_model_listener_spec.rb",
