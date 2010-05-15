@@ -4,8 +4,10 @@ class GenericListener
   def self.after_create(object)
     object.class.create
   end
+
   def self.after_update(object)
   end
+
   def self.after_destroy(object)
   end
 end
@@ -19,9 +21,6 @@ end
 class BarListener < GenericListener
 end
 
-class BazListener < GenericListener
-end
-
 describe ActiveModelListener do
   before do
     build_model :articles do
@@ -32,11 +31,14 @@ describe ActiveModelListener do
     end
 
     ActiveModelListener.listeners.clear
-    ActiveModelListener.listeners << FooListener
-    ActiveModelListener.listeners << BarListener
   end
 
   describe "with_listeners" do
+    before do
+      ActiveModelListener.listeners << FooListener
+      ActiveModelListener.listeners << BarListener
+    end
+
     it "only fires those listeners that are present" do
       FooListener.should_receive(:after_create)
       BarListener.should_not_receive(:after_create)
@@ -58,6 +60,11 @@ describe ActiveModelListener do
   end
 
   describe "without_listeners" do
+    before do
+      ActiveModelListener.listeners << FooListener
+      ActiveModelListener.listeners << BarListener
+    end
+
     it "fires no listeners" do
       FooListener.should_not_receive(:after_create)
       BarListener.should_not_receive(:after_create)
@@ -69,6 +76,11 @@ describe ActiveModelListener do
   end
 
   describe "callback methods" do
+    before do
+      ActiveModelListener.listeners << FooListener
+      ActiveModelListener.listeners << BarListener
+    end
+
     it "should turn off other listeners" do
       FooListener.should_receive(:after_create).once
       Article.create! :title => "foo"
@@ -81,7 +93,12 @@ describe ActiveModelListener do
   end
 
   describe "after create" do
-    it "should fire off all wired up events" do
+    before do
+      ActiveModelListener.listeners << FooListener
+      ActiveModelListener.listeners << BarListener
+    end
+
+    it "should fire all wired up events" do
       FooListener.should_receive(:after_create)
       BarListener.should_receive(:after_create)
       Article.create! :title => "foo"
@@ -89,7 +106,12 @@ describe ActiveModelListener do
   end
 
   describe "after update" do
-    it "should fire off all wired up events" do
+    before do
+      ActiveModelListener.listeners << FooListener
+      ActiveModelListener.listeners << BarListener
+    end
+
+    it "should fire all wired up events" do
       article = Article.create
       FooListener.should_receive(:after_update).with(article)
       BarListener.should_receive(:after_update).with(article)
@@ -98,7 +120,12 @@ describe ActiveModelListener do
   end
 
   describe "after destroy" do
-    it "should fire off all wired up events" do
+    before do
+      ActiveModelListener.listeners << FooListener
+      ActiveModelListener.listeners << BarListener
+    end
+
+    it "should fire all wired up events" do
       article = Article.create
       FooListener.should_receive(:after_destroy).with(article)
       BarListener.should_receive(:after_destroy).with(article)
@@ -108,15 +135,35 @@ describe ActiveModelListener do
 
   describe "a listener with missing methods" do
     before do
-      ActiveModelListener.listeners.clear
       ActiveModelListener.listeners << SimpleListener
     end
-      
-    it "should not fire off the missing methods" do
+
+    it "should not fire the missing methods" do
       article = Article.create
       proc do
         article.destroy
       end.should_not raise_error
+    end
+  end
+
+  describe "a listener with missing methods" do
+    before do
+      ActiveModelListener.listeners << SimpleListener
+    end
+
+    it "should not fire the missing methods" do
+      article = Article.create
+      proc do
+        article.destroy
+      end.should_not raise_error
+    end
+  end
+
+  ["FooListener", :foo_listener, "foo_listener"].each do |name|
+    it "work when specifying with a format like #{name}" do
+      ActiveModelListener.listeners << name
+      FooListener.should_receive(:after_create)
+      Article.create
     end
   end
 

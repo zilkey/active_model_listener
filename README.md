@@ -4,13 +4,6 @@ Simple, global ActiveRecord event observers, using a middleware architecture, th
 
 ## Installation
 
-The gem is hosted at gemcutter.  You can either add gemcutter as a source, or you can make gemcutter your default source (recommended):
-
-    gem install gemcutter
-    gem tumble
-
-Then, install it like any other gem:
-
     gem install active_model_listener
 
 ## Usage
@@ -28,32 +21,28 @@ Add the listeners to the ActiveModelListener in an initializer:
     # config/initializers/active_model_listener.rb
     ActiveModelListener.listeners << ActivityFeedListener
 
-Then, create a listener class that defines methods for after_create, after_update and after_destroy:
+NOTE: you can also use a string or symbol version of the class.  The following are all equivalent:
+
+    ActiveModelListener.listeners << ActivityFeedListener
+    ActiveModelListener.listeners << "ActivityFeedListener"
+    ActiveModelListener.listeners << "activity_feed_listener"
+    ActiveModelListener.listeners << :activity_feed_listener
+
+Then, create a listener class that defines methods for after_create, after_update and/or after_destroy:
 
     class ActivityFeedListener
       class << self
         def after_create(record)
-          description = "#{record.class.name} was created"
-          publish_activity_feed_items record, description
+          # do stuff
         end
 
         def after_update(record)
-          description = "#{record.class.name} was updated"
-          publish_activity_feed_items record, description
+          # do stuff
         end
 
         def after_destroy(record)
-          description = "#{record.class.name} was deleted"
-          publish_activity_feed_items record, description
+          # do stuff
         end
-
-        def publish_activity_feed_items(record, description)
-          record.activity_feed_item_subscribers.each do |subscriber|
-            ActivityFeedItem.create :user => subscriber, :description => description
-          end
-        end
-
-        private :publish_activity_feed_items
       end
     end
 

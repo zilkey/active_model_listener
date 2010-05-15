@@ -8,7 +8,7 @@ begin
     gem.summary = %Q{Simple, global ActiveRecord event observers, using a middleware architecture, that can easily be turned on and off.  Designed for audit trails, activity feeds and other app-level event handlers}
     gem.email = "jeff@zilkey.com"
     gem.homepage = "http://github.com/zilkey/active_model_listener"
-    gem.authors = ["Jeff Dean"]
+    gem.authors = ["Jeff Dean", "Peter Jaros"]
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
   end
 

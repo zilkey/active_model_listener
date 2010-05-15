@@ -13,7 +13,8 @@ class ActiveModelListener
       method_name = "after_#{action}"
       self.listeners.each do |listener|
         without_listeners do
-          listener.send method_name, object if listener.respond_to?(method_name)
+          listener_object = listener.to_s.classify.constantize
+          listener_object.send method_name, object if listener_object.respond_to?(method_name)
         end
       end
     end

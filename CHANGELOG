@@ -1,5 +1,6 @@
 2010-05-14
   - fixed annoying 'activerecord' deprecation warning (thanks to Todd Persen)
+  - ActiveModelListener.listeners << now takes a string to play well with Rails in development mode (Peter Jaros)
 
 2009-10-26
   - you no longer have to define all 3 callback methods in callback classes
